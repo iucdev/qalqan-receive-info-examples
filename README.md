@@ -1,0 +1,75 @@
+# Qalqan — примеры запросов и ответов ШЭП-сервисов (C#, Java, XML)
+
+Примеры бизнес-нагрузки `<data>` для ШЭП-сервисов информационной системы Qalqan (ОСМС). Для каждого эндпоинта —
+папка с тремя самодостаточными файлами:
+
+| Файл | Содержимое |
+|---|---|
+| `<Endpoint>.cs` | DTO запроса и ответа (`XmlSerializer`), заполненный пример запроса, пример XML ответа и его разбор |
+| `<Endpoint>.java` | То же на Java 11+ без внешних зависимостей (DOM) |
+| `<Endpoint>.xml` | Готовый XML: элемент `<data>` запроса (в `requestData`) и элемент `<data>` ответа (в `responseData`) |
+
+Транспорт ШЭП (конверт `SendMessage`, `requestInfo`, транспортная подпись, адрес приёма) в примерах не рассматривается:
+файлы описывают только то, что помещается внутрь `requestData` и приходит внутри `responseData`.
+
+## QalqanReceiveInfo
+
+Паспорт сервиса: <https://sb.egov.kz/services/passport/ORGAM-S-1170>.
+Один сервис, операция определяется полем `RequestType` внутри `<data xsi:type="q1:IntegraRequest">`; рядом лежит блок
+данных с именем `<RequestType>Request` (исключение: `DayHospital_LoadOrUpdateRequest`, без «Cases»).
+
+| Эндпоинт | Назначение |
+|---|---|
+| [DayHospital_LoadCases](QalqanReceiveInfo/DayHospital_LoadCases/) | Случаи дневного стационара (только новые) |
+| [DayHospital_LoadOrUpdateCases](QalqanReceiveInfo/DayHospital_LoadOrUpdateCases/) | Случаи дневного стационара (вставка/обновление) |
+| [Inpatient_LoadCases](QalqanReceiveInfo/Inpatient_LoadCases/) | Случаи круглосуточного стационара |
+| [Inpatient_LoadOrUpdateCases](QalqanReceiveInfo/Inpatient_LoadOrUpdateCases/) | То же, вставка/обновление |
+| [Reception_LoadCases](QalqanReceiveInfo/Reception_LoadCases/) | Обращения приёмного покоя |
+| [Reception_LoadOrUpdateCases](QalqanReceiveInfo/Reception_LoadOrUpdateCases/) | То же, вставка/обновление |
+| [Services_LoadServices](QalqanReceiveInfo/Services_LoadServices/) | Медицинские услуги (только новые) |
+| [Services_LoadOrUpdateServices](QalqanReceiveInfo/Services_LoadOrUpdateServices/) | То же, вставка/обновление |
+| [References_Services](QalqanReceiveInfo/References_Services/) | Справочник услуг (тарификатор), постранично |
+| [References_Drugs](QalqanReceiveInfo/References_Drugs/) | Справочник лекарственных средств |
+| [References_Diagnosises](QalqanReceiveInfo/References_Diagnosises/) | Справочник диагнозов МКБ-10 |
+| [References_Operations](QalqanReceiveInfo/References_Operations/) | Справочник операций МКБ-9 |
+| [Screenings_Complete](QalqanReceiveInfo/Screenings_Complete/) | Завершение скрининга (ответ без тела результата) |
+| [Screenings_Status](QalqanReceiveInfo/Screenings_Status/) | Статус скрининга |
+
+`Load*` — только вставка новых записей, `LoadOrUpdate*` — вставка или обновление по идентификатору записи МИС
+(`CaseId` / `AdmissionId` / `ServiceId`).
+
+Правила формата (совпадают с .NET `XmlSerializer` на стороне сервиса): даты `yyyy-MM-dd`; дата/время ISO 8601 со
+смещением (`2026-04-03T10:30:00+05:00`); перечисления **числовыми кодами** (`<Sex>1</Sex>`, `<BgFinanceSource>1</BgFinanceSource>`);
+списки — обёртка плюс элементы с именем типа (`<Services><InpatientServiceItemRequest>…`), списки строк — `<string>`.
+Значения кодов приведены в комментариях к перечислениям внутри файлов.
+
+Ответ: `<data xsi:type="q1:IntegraResponse">` с `ResponseInfo` (`RequestType`, `StatusCode`, `Message`) и блоком
+`<RequestType>Response` при успехе. `StatusCode`: 200 — успех; 400 — ошибка запроса (неизвестный тип, нет модели, валидация);
+500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС. Ошибки по отдельным записям пакета
+не делают ответ неуспешным: они перечислены в `Errors` с `RecIndex`, идентификатором записи, `Code`, `Message`.
+
+## QalqanReceiveInfoFromMIS
+
+Паспорт сервиса: <https://sb.egov.kz/services/passport/ORGAM-S-9847>.
+
+| Эндпоинт | Назначение |
+|---|---|
+| [SendEvents](QalqanReceiveInfoFromMIS/SendEvents/) | Пакет событий МИС: `<ZippedEventsInBase64>` = Base64(gzip(JSON `{ "events": [...] }`)) |
+
+Событие: `entityType` (числовой код типа сущности, перечисление в файлах), `timestamp` (unix-время в секундах),
+`versionHash` (hex, вычисляет МИС; при несовпадении ответ `Status = InvalidHash`), `moId`, `organizationBin`, `misBin`,
+`data` — JSON тела события в виде строки (`eventId`, `eventType`, `misId`, `organizationId`, `organizationBin`,
+`patientInformation` и поля конкретного типа события). Ответ: `IsSuccess`, `ErrorMessage`, `Status` (`Success` | `InvalidHash` | `Error`).
+
+## Проверка сборки
+
+```bash
+dotnet run --project verify/csharp/Verify.csproj -c Release   # компилирует все .cs и запускает Example.Run()
+bash verify/java/run.sh                                        # компилирует все .java и запускает main()
+```
+
+Все идентификаторы в примерах вымышленные (БИН `990140000001`, `OrgSurId 100001`, ИИН вида `9001013000xx`).
+
+## Лицензия
+
+MIT — см. [LICENSE](LICENSE).

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfo / Services_LoadOrUpdateServices — медицинские услуги.
+  Файл самодостаточен: DTO запроса, DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-1170
+-->
+<example service="QalqanReceiveInfo" endpoint="Services_LoadOrUpdateServices" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.gosreestr.kz">
+      <RequestType>Services_LoadOrUpdateServices</RequestType>
+      <Services_LoadOrUpdateServicesRequest>
+        <List>
+          <ServiceItemRequest>
+            <ServiceId>9002</ServiceId>
+            <ServiceAt>2026-04-10T10:30:00+00:00</ServiceAt>
+            <Customer>
+              <Bin>990140000001</Bin>
+              <OrgSurId>100001</OrgSurId>
+            </Customer>
+            <Executor>
+              <Bin>990140000001</Bin>
+              <OrgSurId>100001</OrgSurId>
+              <DepartmentSurid>200000000000001</DepartmentSurid>
+            </Executor>
+            <Doctor>
+              <DoctorIin>900101300001</DoctorIin>
+            </Doctor>
+            <Patient>
+              <PatientIin>950101300003</PatientIin>
+              <BirthDate>1995-01-01</BirthDate>
+              <Sex>1</Sex>
+            </Patient>
+            <PersonCategory>1</PersonCategory>
+            <EpsFinanceSource>1</EpsFinanceSource>
+            <Referral>
+              <EpsReferralId>1234567890123456789012345678901234567890</EpsReferralId>
+              <ReferralId>12345</ReferralId>
+              <ReferralAt>2026-04-09T09:00:00+00:00</ReferralAt>
+              <ReferralServiceCode>B01.047.001</ReferralServiceCode>
+              <ReferralDiagnosisCode>J06.9</ReferralDiagnosisCode>
+              <ReferralVisitReason>20</ReferralVisitReason>
+            </Referral>
+            <VisitReason>17</VisitReason>
+            <ServicePlace>�</ServicePlace>
+            <ServiceCode>B01.047.001</ServiceCode>
+            <DiagnosisCode>J06.9</DiagnosisCode>
+          </ServiceItemRequest>
+        </List>
+      </Services_LoadOrUpdateServicesRequest>
+    </data>
+  </request>
+  <!-- responseData/data. StatusCode: 200 — успех; 400 — ошибка запроса; 500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС -->
+  <response>
+    <data xmlns:q1="http://integrations.gosreestr.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <ResponseInfo>
+        <RequestType>Services_LoadOrUpdateServices</RequestType>
+        <StatusCode>200</StatusCode>
+        <Message>OK</Message>
+      </ResponseInfo>
+      <Services_LoadOrUpdateServicesResponse>
+        <Total>1</Total>
+        <Inserted>0</Inserted>
+        <Updated>0</Updated>
+        <Unchanged>0</Unchanged>
+        <Errors>
+          <ServiceErrorDto>
+            <RecIndex>0</RecIndex>
+            <ServiceId>9002</ServiceId>
+            <PatientIin>950101300003</PatientIin>
+            <PatientRpnId xsi:nil="true" />
+            <Code>REFERRAL_DIAGNOSIS_INVALID</Code>
+            <Message>Код диагноза направления J06.10 не найден в справочнике МКБ-10</Message>
+          </ServiceErrorDto>
+        </Errors>
+      </Services_LoadOrUpdateServicesResponse>
+    </data>
+  </response>
+</example>

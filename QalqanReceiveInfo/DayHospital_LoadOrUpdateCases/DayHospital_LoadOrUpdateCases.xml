@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfo / DayHospital_LoadOrUpdateCases — случаи дневного стационара.
+  Файл самодостаточен: DTO запроса, DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-1170
+-->
+<example service="QalqanReceiveInfo" endpoint="DayHospital_LoadOrUpdateCases" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.gosreestr.kz">
+      <RequestType>DayHospital_LoadOrUpdateCases</RequestType>
+      <DayHospital_LoadOrUpdateRequest>
+        <List>
+          <DayHospitalCaseRequest>
+            <CaseId>1004</CaseId>
+            <Organization>
+              <Bin>990140000001</Bin>
+              <OrgSurId>100001</OrgSurId>
+            </Organization>
+            <DepartmentSurId>200000000000002</DepartmentSurId>
+            <Doctor>
+              <DoctorIin>900101300001</DoctorIin>
+            </Doctor>
+            <DayHospitalType>100</DayHospitalType>
+            <AtHome>false</AtHome>
+            <CardNumber>K-2026-0001</CardNumber>
+            <AdmissionDate>2026-04-01</AdmissionDate>
+            <DischargeDate>2026-04-10</DischargeDate>
+            <TreatmentOutcomeCode>100</TreatmentOutcomeCode>
+            <FinalDiagnosisCode>J06.9</FinalDiagnosisCode>
+            <PrimaryOperation>
+              <Code>16.08</Code>
+              <Date>2026-04-03T10:30:00+05:00</Date>
+              <OperationComplications>
+                <OperationComplicationItemRequest>
+                  <ComplicationCode>300</ComplicationCode>
+                  <ComplicationType>100</ComplicationType>
+                </OperationComplicationItemRequest>
+              </OperationComplications>
+            </PrimaryOperation>
+            <AdditionalOperations>
+              <AdditionalOperationItemRequest>
+                <OperationCode>16.09</OperationCode>
+                <OperationDate>2026-04-04T09:00:00+05:00</OperationDate>
+                <OperationComplications>
+                  <OperationComplicationItemRequest>
+                    <ComplicationCode>400</ComplicationCode>
+                    <ComplicationType>200</ComplicationType>
+                  </OperationComplicationItemRequest>
+                </OperationComplications>
+              </AdditionalOperationItemRequest>
+            </AdditionalOperations>
+            <Services>
+              <DayHospitalServiceItemRequest>
+                <ServiceCode>SRV-001</ServiceCode>
+                <Quantity>2</Quantity>
+                <Date>2026-04-02</Date>
+              </DayHospitalServiceItemRequest>
+            </Services>
+            <Drugs>
+              <DayHospitalDrugItemRequest>
+                <DrugCode>DRG-100</DrugCode>
+                <RegistrationNumber>RN-55512</RegistrationNumber>
+                <Quantity>3.5</Quantity>
+                <ActualCostTg>1250.00</ActualCostTg>
+              </DayHospitalDrugItemRequest>
+            </Drugs>
+            <PaidService>
+              <PaymentSource>1</PaymentSource>
+              <AmountTg>5000.00</AmountTg>
+            </PaidService>
+            <Patient>
+              <PatientIin>950101300003</PatientIin>
+              <RpnId>123456789</RpnId>
+              <BirthDate>1995-01-01</BirthDate>
+              <Sex>0</Sex>
+            </Patient>
+            <BgFinanceSource>2</BgFinanceSource>
+            <IdentificationMethod>
+              <Type>1</Type>
+            </IdentificationMethod>
+          </DayHospitalCaseRequest>
+        </List>
+      </DayHospital_LoadOrUpdateRequest>
+    </data>
+  </request>
+  <!-- responseData/data. StatusCode: 200 — успех; 400 — ошибка запроса; 500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС -->
+  <response>
+    <data xmlns:q1="http://integrations.gosreestr.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <ResponseInfo>
+        <RequestType>DayHospital_LoadOrUpdateCases</RequestType>
+        <StatusCode>200</StatusCode>
+        <Message>OK</Message>
+      </ResponseInfo>
+      <DayHospital_LoadOrUpdateResponse>
+        <Total>1</Total>
+        <Inserted>0</Inserted>
+        <Updated>1</Updated>
+        <Unchanged>0</Unchanged>
+        <Errors></Errors>
+      </DayHospital_LoadOrUpdateResponse>
+    </data>
+  </response>
+</example>

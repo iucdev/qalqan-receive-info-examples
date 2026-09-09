@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfo / Screenings_Status — статус скрининга.
+  Файл самодостаточен: DTO запроса, DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-1170
+-->
+<example service="QalqanReceiveInfo" endpoint="Screenings_Status" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.gosreestr.kz">
+      <RequestType>Screenings_Status</RequestType>
+      <Screenings_StatusRequest>
+        <ScreeningId>SCR-2026-001</ScreeningId>
+      </Screenings_StatusRequest>
+    </data>
+  </request>
+  <!-- responseData/data. StatusCode: 200 — успех; 400 — ошибка запроса; 500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС -->
+  <response>
+    <data xmlns:q1="http://integrations.gosreestr.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <ResponseInfo>
+        <RequestType>Screenings_Status</RequestType>
+        <StatusCode>200</StatusCode>
+        <Message>OK</Message>
+      </ResponseInfo>
+      <Screenings_StatusResponse>
+        <SystemId>10</SystemId>
+        <ScreeningId>SCR-2026-001</ScreeningId>
+        <Completed>true</Completed>
+        <CompletedAt>2026-04-10T10:30:00Z</CompletedAt>
+      </Screenings_StatusResponse>
+    </data>
+  </response>
+</example>

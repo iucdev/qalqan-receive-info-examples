@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfoFromMIS / SendEvents — передача пакета событий МИС.
+  Файл самодостаточен: DTO запроса (ZippedEventsInBase64 = Base64(gzip(JSON пакета событий))), DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  versionHash в примере — заглушка: реальное значение вычисляет МИС (при несовпадении сервер отвечает Status = InvalidHash).
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-9847
+-->
+<example service="QalqanReceiveInfoFromMIS" endpoint="SendEvents" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data. ZippedEventsInBase64 = Base64(gzip(JSON)); распакованный JSON приведён ниже в комментарии -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.e-qazyna.kz">
+      <ZippedEventsInBase64>H4sIAAAAAAAACtVUTW/bMAz9LzrHgWRb/rp1TbEGG9qiDXZY0oNss6nWxA4kJVtW5L+PshIvTtxtwLDDAh8i8pF8pPT4SmADldEkm74S/CPNdrJdAck4GxAjl6CNWK5IxuIkZBH1AzYM4mRANqC0rKtroZ9JRuhf/siALOtxiWXsCSvXai4q+V0YrPFOVlgiTSkLHZpZuNS99lIYgdbXmetrXM5INiOUw5MfJpFXpkC9EIrIS3OfeyLmeRH5ackCmJHBPsgOoAkbjR8ury/u3181Piy5T8doYzgm2XosjzMvUm3cx2Qb0HOtV9KIRTdLlHSm46A5lCOx1QhgFI+l1MWzUHMYCQMTvKgm0qd+5NHYY3zC4oxS/IaY4bNjtDZF3QJdD0aBMEts+rbHKas7pIXOO9G8io6zlGL+UWqDximOe/mS27Eg4CYOhkEL+SAr1xT23RrbZIE17h6P+7mBr3mt7Lym1g4rWSippT4Y9BpBansobU0rx3JcPdVq2QwSPchJHsbOKaMMa1HqiKlVe2F+EPIoTlKkYZPLeSXMWoF2GewZ1Eni3W6H4K5c/ORELrEfJ3EQxkPG/ze18Cj0Yx4EXh5A7oUhAy8tw9ITIgnKmOU+0LBHLReXk/GnrlSal3omkz3tP5TIP7hcdFbrxcKaoCpB3f5SyOeYN7k66KguTK0Oq+fc0UTvCSgoQG5+R6EP9SaJA7hDI+S8Z6ecQA8ZaTtRBxOFQdSDweG5e8UdgGbUa9W7fwKP8glNM8azRgD7/aNgfldr98pO+fhH/nMa/j7+CxTmHoRu3sDhCmXx0i4Hx3QEC9vV9ohxd9yWc5dvNKFRxnv3ZTf+CZQSiwdQG1nA1Tcojt0bXFQ/BeFE0i62Fojb43H3A2Jx+7B5BwAA</ZippedEventsInBase64>
+    </data>
+  </request>
+  <!-- Распакованный JSON пакета (поле data каждого события в реальном пакете — JSON-строка; здесь развёрнуто для чтения):
+  {
+    "events": [
+      {
+        "entityType": 51,
+        "timestamp": 1784160231.378,
+        "versionHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "moId": 100001,
+        "organizationBin": "990140000001",
+        "misBin": "990140000001",
+        "data": {
+          "eventId": "05ef2486-d9e0-4ec6-9b25-a75bc629d13e",
+          "eventType": "DISCHARGE",
+          "misId": "10",
+          "organizationId": "100001",
+          "organizationBin": "990140000001",
+          "hospitalizationId": "6800000000000001",
+          "bedDays": 10,
+          "dischargeDateTime": "2026-07-15T17:00:00.000Z",
+          "outcome": "200",
+          "treatmentOutcome": "200",
+          "inPatientPayType": "200",
+          "diagList": [
+            {
+              "mkb10": "N73.3",
+              "diagKind": "400",
+              "diagType": "300"
+            }
+          ],
+          "dischargeNewborn": [],
+          "epicrisis": [],
+          "surgeryList": [],
+          "patientInformation": {
+            "iin": "950101300003",
+            "rpnId": "123456789"
+          },
+          "signatures": {
+            "signerInformation": {}
+          }
+        }
+      },
+      {
+        "entityType": 28,
+        "timestamp": 1772787347.15,
+        "versionHash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "moId": 100001,
+        "organizationBin": "990140000001",
+        "misBin": "990140000001",
+        "data": {
+          "eventId": "56427533-b3eb-441e-9d4d-aa83d71b2e04",
+          "eventType": "ACTIVE",
+          "misId": 10,
+          "organizationId": 100001,
+          "organizationBin": "990140000001",
+          "patientInformation": {
+            "iin": "950101300003",
+            "rpnId": "123456789"
+          },
+          "signature": null,
+          "senderOrganizationId": "100001",
+          "senderOrganizationBin": "990140000001",
+          "senderDoctorId": "0",
+          "senderDoctorIin": null,
+          "receiverOrganizationId": "100001",
+          "receiverOrganizationBin": "990140000001",
+          "receiverDoctorId": "45500000000000001",
+          "receiverDoctorIin": "900101300001",
+          "activeStatusId": 200,
+          "changeDateTime": "2026-03-05T09:15:47.150Z",
+          "regPostId": 45500000000000002,
+          "regPostIin": "900101300002",
+          "rejectReason": null,
+          "sicks": [],
+          "activeDeliveryStatusId": null,
+          "receiveDate": "2026-03-06T06:50:00.000Z",
+          "outcomeId": null,
+          "referralServiceExecId": null,
+          "visitType": "4",
+          "dischargeId": null
+        }
+      }
+    ]
+  }
+  -->
+  <!-- responseData/data. Status: Success | InvalidHash | Error -->
+  <response>
+    <data xmlns:q1="http://integrations.e-qazyna.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <IsSuccess>true</IsSuccess>
+      <Status>Success</Status>
+    </data>
+  </response>
+  <response-invalid-hash>
+    <data xmlns:q1="http://integrations.e-qazyna.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <IsSuccess>false</IsSuccess>
+      <ErrorMessage>versionHash события 05ef2486-d9e0-4ec6-9b25-a75bc629d13e не совпадает</ErrorMessage>
+      <Status>InvalidHash</Status>
+    </data>
+  </response-invalid-hash>
+</example>

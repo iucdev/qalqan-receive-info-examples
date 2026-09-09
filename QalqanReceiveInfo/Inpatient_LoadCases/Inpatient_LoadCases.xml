@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfo / Inpatient_LoadCases — случаи круглосуточного стационара.
+  Файл самодостаточен: DTO запроса, DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-1170
+-->
+<example service="QalqanReceiveInfo" endpoint="Inpatient_LoadCases" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.gosreestr.kz">
+      <RequestType>Inpatient_LoadCases</RequestType>
+      <Inpatient_LoadCasesRequest>
+        <List>
+          <InpatientCaseRequest>
+            <CaseId>4</CaseId>
+            <Organization>
+              <Bin>990140000001</Bin>
+              <OrgSurId>100001</OrgSurId>
+            </Organization>
+            <DepartmentSurId>200000000000001</DepartmentSurId>
+            <Doctor>
+              <DoctorIin>900101300001</DoctorIin>
+            </Doctor>
+            <Patient>
+              <BirthDate>2025-12-02</BirthDate>
+              <Sex>1</Sex>
+            </Patient>
+            <IsPrimaryHospitalization>true</IsPrimaryHospitalization>
+            <CardNumber>6841-1</CardNumber>
+            <BedProfileCode>15000</BedProfileCode>
+            <HospitalizationTypeCode>400</HospitalizationTypeCode>
+            <AdmissionDate>2025-12-04</AdmissionDate>
+            <DischargeDate>2025-12-08</DischargeDate>
+            <PrimaryFinalDiagnosisCode>P59.8</PrimaryFinalDiagnosisCode>
+            <ComplicatingFinalDiagnosisCode />
+            <ClarifyingFinalDiagnosisCodes />
+            <ConcomitantFinalDiagnosisCodes />
+            <AdditionalOperations />
+            <Services>
+              <InpatientServiceItemRequest>
+                <ServiceCode>D99.590.019</ServiceCode>
+                <Quantity>1</Quantity>
+                <Date>2025-12-03</Date>
+              </InpatientServiceItemRequest>
+              <InpatientServiceItemRequest>
+                <ServiceCode>D99.590.019</ServiceCode>
+                <Quantity>1</Quantity>
+                <Date>2025-12-04</Date>
+              </InpatientServiceItemRequest>
+              <InpatientServiceItemRequest>
+                <ServiceCode>B03.435.002</ServiceCode>
+                <Quantity>1</Quantity>
+                <Date>2025-12-05</Date>
+              </InpatientServiceItemRequest>
+              <InpatientServiceItemRequest>
+                <ServiceCode>B03.398.002</ServiceCode>
+                <Quantity>1</Quantity>
+                <Date>2025-12-05</Date>
+              </InpatientServiceItemRequest>
+              <InpatientServiceItemRequest>
+                <ServiceCode>B02.114.002</ServiceCode>
+                <Quantity>1</Quantity>
+                <Date>2025-12-06</Date>
+              </InpatientServiceItemRequest>
+            </Services>
+            <Drugs />
+            <StayOutcomeCode>200</StayOutcomeCode>
+            <TreatmentOutcomeCode>200</TreatmentOutcomeCode>
+            <OncologyCases />
+            <NewbornCase>
+              <BirthData>
+                <GestationWeekAtDelivery>40</GestationWeekAtDelivery>
+                <NewbornWeightAtBirthGrams>4500</NewbornWeightAtBirthGrams>
+              </BirthData>
+            </NewbornCase>
+            <BgFinanceSource>0</BgFinanceSource>
+          </InpatientCaseRequest>
+        </List>
+      </Inpatient_LoadCasesRequest>
+    </data>
+  </request>
+  <!-- responseData/data. StatusCode: 200 — успех; 400 — ошибка запроса; 500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС -->
+  <response>
+    <data xmlns:q1="http://integrations.gosreestr.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <ResponseInfo>
+        <RequestType>Inpatient_LoadCases</RequestType>
+        <StatusCode>200</StatusCode>
+        <Message>OK</Message>
+      </ResponseInfo>
+      <Inpatient_LoadCasesResponse>
+        <Total>1</Total>
+        <Inserted>0</Inserted>
+        <Updated>0</Updated>
+        <Unchanged>0</Unchanged>
+        <Errors>
+          <InpatientCaseErrorDto>
+            <RecIndex>0</RecIndex>
+            <CaseId>4</CaseId>
+            <PatientRpnId xsi:nil="true" />
+            <Code>VALIDATION</Code>
+            <Message>Пациент не найден по ИИН/RpnId; для новорожденного укажите RpnId</Message>
+          </InpatientCaseErrorDto>
+        </Errors>
+      </Inpatient_LoadCasesResponse>
+    </data>
+  </response>
+</example>

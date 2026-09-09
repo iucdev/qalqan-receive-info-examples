@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfo / References_Operations — постраничное получение справочника.
+  Файл самодостаточен: DTO запроса, DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-1170
+-->
+<example service="QalqanReceiveInfo" endpoint="References_Operations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.gosreestr.kz">
+      <RequestType>References_Operations</RequestType>
+      <References_OperationsRequest>
+        <PageSize>5</PageSize>
+        <PageIndex>1</PageIndex>
+      </References_OperationsRequest>
+    </data>
+  </request>
+  <!-- responseData/data. StatusCode: 200 — успех; 400 — ошибка запроса; 500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС -->
+  <response>
+    <data xmlns:q1="http://integrations.gosreestr.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <ResponseInfo>
+        <RequestType>References_Operations</RequestType>
+        <StatusCode>200</StatusCode>
+        <Message>OK</Message>
+      </ResponseInfo>
+      <References_OperationsResponse>
+        <Items>
+          <OperationsReferenceItem>
+            <Code>16.08</Code>
+            <QalqanCode>1608</QalqanCode>
+            <NameRu>Другие операции на глазнице</NameRu>
+            <NameKz>Көз ұясындағы басқа операциялар</NameKz>
+          </OperationsReferenceItem>
+        </Items>
+        <PageSize>5</PageSize>
+        <PageIndex>1</PageIndex>
+        <PagesCount>735</PagesCount>
+      </References_OperationsResponse>
+    </data>
+  </response>
+</example>
