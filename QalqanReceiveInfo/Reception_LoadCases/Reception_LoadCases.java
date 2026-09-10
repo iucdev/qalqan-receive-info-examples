@@ -728,6 +728,8 @@ public final class Reception_LoadCases {
         public final int recIndex;
         /** Идентификатор записи: CaseId / AdmissionId / ServiceId — в зависимости от типа пакета. */
         public final Long recordId;
+        /** Внешний идентификатор записи (ExternalId у карт вызова СП). */
+        public final String externalId;
         public final String patientIin;
         public final Long patientRpnId;
         public final String code;
@@ -735,9 +737,10 @@ public final class Reception_LoadCases {
         /** Все дочерние элементы ошибки как есть (имя -> текст). */
         public final Map<String, String> fields;
 
-        public RecordError(int recIndex, Long recordId, String patientIin, Long patientRpnId, String code, String message, Map<String, String> fields) {
+        public RecordError(int recIndex, Long recordId, String externalId, String patientIin, Long patientRpnId, String code, String message, Map<String, String> fields) {
             this.recIndex = recIndex;
             this.recordId = recordId;
+            this.externalId = externalId;
             this.patientIin = patientIin;
             this.patientRpnId = patientRpnId;
             this.code = code;
@@ -766,6 +769,7 @@ public final class Reception_LoadCases {
             return new RecordError(
                     recIndex == null ? -1 : recIndex,
                     recordId,
+                    Xml.childText(el, "ExternalId"),
                     Xml.childText(el, "PatientIin"),
                     Xml.childLong(el, "PatientRpnId"),
                     Xml.childText(el, "Code"),
@@ -775,7 +779,7 @@ public final class Reception_LoadCases {
 
         @Override
         public String toString() {
-            return "RecordError{recIndex=" + recIndex + ", recordId=" + recordId + ", code=" + code + ", message=" + message + "}";
+            return "RecordError{recIndex=" + recIndex + ", recordId=" + recordId + ", externalId=" + externalId + ", code=" + code + ", message=" + message + "}";
         }
     }
 

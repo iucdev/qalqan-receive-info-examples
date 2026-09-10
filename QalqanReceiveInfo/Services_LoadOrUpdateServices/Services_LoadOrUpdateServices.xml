@@ -44,7 +44,7 @@
               <ReferralVisitReason>20</ReferralVisitReason>
             </Referral>
             <VisitReason>17</VisitReason>
-            <ServicePlace>�</ServicePlace>
+            <ServicePlace>П</ServicePlace>
             <ServiceCode>B01.047.001</ServiceCode>
             <DiagnosisCode>J06.9</DiagnosisCode>
           </ServiceItemRequest>

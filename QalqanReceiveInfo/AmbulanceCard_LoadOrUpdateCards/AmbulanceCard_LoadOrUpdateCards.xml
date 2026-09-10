@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  QalqanReceiveInfo / AmbulanceCard_LoadOrUpdateCards — карты вызова скорой помощи (актив / госпитализация).
+  Файл самодостаточен: DTO запроса, DTO ответа и заполненный пример.
+  Формируется только бизнес-нагрузка <data> (содержимое requestData / responseData конверта ШЭП);
+  сам конверт SendMessage, requestInfo и транспортная подпись — стандартная часть ШЭП и здесь не рассматриваются.
+  Паспорт сервиса: https://sb.egov.kz/services/passport/ORGAM-S-1170
+-->
+<example service="QalqanReceiveInfo" endpoint="AmbulanceCard_LoadOrUpdateCards" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- requestData/data -->
+  <request>
+    <data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:type="q1:IntegraRequest" xmlns:q1="http://integrations.gosreestr.kz">
+      <RequestType>AmbulanceCard_LoadOrUpdateCards</RequestType>
+      <AmbulanceCard_LoadOrUpdateCardsRequest>
+        <List>
+          <AmbulanceCardRequest>
+            <ReceiveId>100001</ReceiveId>
+            <ExternalId>TEST-AMB-20260903-0001</ExternalId>
+            <SenderMoId>10001</SenderMoId>
+            <Iin>990101300123</Iin>
+            <LastName>Иванов</LastName>
+            <FirstName>Иван</FirstName>
+            <SecondName>Иванович</SecondName>
+            <Age>27</Age>
+            <Gender>3</Gender>
+            <BirthDate>1999-01-01</BirthDate>
+            <SocialStatus>Работающий</SocialStatus>
+            <PatientInfo>Тестовый пациент</PatientInfo>
+            <ReceiverMoId>20001</ReceiverMoId>
+            <ReceiverTerMoId>20002</ReceiverTerMoId>
+            <PersonRpnId>300001</PersonRpnId>
+            <TerritoryServiceId>400001</TerritoryServiceId>
+            <TerritoryServiceNumber>15</TerritoryServiceNumber>
+            <CallNumber>CALL-000001</CallNumber>
+            <GlobalCallNumber>GLOBAL-CALL-20260903-000001</GlobalCallNumber>
+            <Priority>1</Priority>
+            <Reason>Повышенная температура</Reason>
+            <DescReason>Температура 39 градусов, слабость</DescReason>
+            <EmergencyCallAddress>г. Астана, район Есиль, ул. Тестовая, д. 10, кв. 25</EmergencyCallAddress>
+            <Caller>Пациент</Caller>
+            <Phone>77001234567</Phone>
+            <Place>1</Place>
+            <DescPlace>Квартира</DescPlace>
+            <Profile>THERAPY</Profile>
+            <DescProfile>Терапевтический профиль</DescProfile>
+            <Info>Тестовый вызов скорой медицинской помощи</Info>
+            <Result>1</Result>
+            <DescResult>Госпитализирован</DescResult>
+            <CallTime>2026-09-03T09:30:00+05:00</CallTime>
+            <TransferTime>2026-09-03T09:32:00+05:00</TransferTime>
+            <DepartureTime>2026-09-03T09:35:00+05:00</DepartureTime>
+            <ArrivalTime>2026-09-03T09:50:00+05:00</ArrivalTime>
+            <HospitalTime>2026-09-03T10:20:00+05:00</HospitalTime>
+            <ArrivalHospitalTime>2026-09-03T10:20:00+05:00</ArrivalHospitalTime>
+            <HospiMoId>50001</HospiMoId>
+            <Diagnosis>J06.9</Diagnosis>
+            <GemoDynamicsADtop>120</GemoDynamicsADtop>
+            <GemoDynamicsADbottom>80</GemoDynamicsADbottom>
+            <GemoDynamicsChD>18</GemoDynamicsChD>
+            <GemoDynamicsChSS>85</GemoDynamicsChSS>
+            <GemoDynamicsTmp>39.0</GemoDynamicsTmp>
+            <MedicalSupplies>
+              <MedicalSuppliesRequest>
+                <Code>MED-001</Code>
+                <Name>Парацетамол</Name>
+                <Measure>таблетка</Measure>
+                <Quantity>1</Quantity>
+                <Info>500 мг</Info>
+              </MedicalSuppliesRequest>
+              <MedicalSuppliesRequest>
+                <Code>DIAG-001</Code>
+                <Name>Измерение артериального давления</Name>
+                <Measure>процедура</Measure>
+                <Quantity>1</Quantity>
+                <Info>АД 120/80 мм рт. ст.</Info>
+              </MedicalSuppliesRequest>
+            </MedicalSupplies>
+            <GemoDynamicsTherapyADtop>118</GemoDynamicsTherapyADtop>
+            <GemoDynamicsTherapyADbottom>78</GemoDynamicsTherapyADbottom>
+            <GemoDynamicsTherapyChD>17</GemoDynamicsTherapyChD>
+            <GemoDynamicsTherapyChSS>80</GemoDynamicsTherapyChSS>
+            <GemoDynamicsTherapyTmp>38.2</GemoDynamicsTherapyTmp>
+            <BrigadeNumber>BR-101</BrigadeNumber>
+            <BrigadeSMP>Станция скорой медицинской помощи №1</BrigadeSMP>
+            <BrigadeCarNumber>123ABC01</BrigadeCarNumber>
+            <BrigadePersonnelCode>DOC-1001</BrigadePersonnelCode>
+            <BrigadePersonnelName>Петров Петр Петрович</BrigadePersonnelName>
+            <Workplace>ТОО Тестовая организация</Workplace>
+            <IsRefusalAssistance>false</IsRefusalAssistance>
+            <RefusingText />
+            <AssociatedDiseases>
+              <string>I10</string>
+              <string>J30.9</string>
+            </AssociatedDiseases>
+            <InjuryType>0</InjuryType>
+            <IsAlcohol>false</IsAlcohol>
+            <Mileage>15</Mileage>
+            <ServiceDate>2026-09-03T09:50:00+05:00</ServiceDate>
+            <Claim>Высокая температура, слабость, головная боль</Claim>
+            <HistoryIllness>Заболел около двух дней назад. Температура повысилась до 39 градусов.</HistoryIllness>
+            <HistoryCycle>Хронические заболевания отрицает.</HistoryCycle>
+            <GeneralState>Средней степени тяжести</GeneralState>
+            <Sense>Сознание ясное</Sense>
+            <Pupils>Равные</Pupils>
+            <LightSensitive>Реакция сохранена</LightSensitive>
+            <SkinIrritations>
+              <string>Кожные покровы чистые</string>
+              <string>Обычной окраски</string>
+            </SkinIrritations>
+            <CardioTones>
+              <string>Ясные</string>
+              <string>Ритмичные</string>
+            </CardioTones>
+            <CardioPulse>
+              <string>Ритмичный</string>
+              <string>Удовлетворительного наполнения</string>
+            </CardioPulse>
+            <CardioSound>Патологических шумов нет</CardioSound>
+            <RespiratorySystem>Грудная клетка симметричная</RespiratorySystem>
+            <RespiratoryBreath>
+              <string>Везикулярное</string>
+              <string>Проводится во все отделы</string>
+            </RespiratoryBreath>
+            <Behaviours>
+              <string>Спокойное</string>
+              <string>Адекватное</string>
+            </Behaviours>
+            <RespiratoryRales>Хрипов нет</RespiratoryRales>
+            <ShortnessBreath>Нет</ShortnessBreath>
+            <NeurologicalEvaluation>Очаговой неврологической симптоматики нет</NeurologicalEvaluation>
+            <Eyeballs>
+              <string>Движения сохранены</string>
+              <string>Симметричные</string>
+            </Eyeballs>
+            <Nerves>
+              <string>Черепные нервы без патологии</string>
+            </Nerves>
+            <TendonReflexes>
+              <string>Живые</string>
+              <string>Симметричные</string>
+            </TendonReflexes>
+            <MotorAreas>
+              <string>Движения сохранены</string>
+              <string>Парезов нет</string>
+            </MotorAreas>
+            <PainSensitivity>
+              <string>Сохранена</string>
+            </PainSensitivity>
+            <Aphasia>Нет</Aphasia>
+            <Syndrome>
+              <string>Интоксикационный синдром</string>
+            </Syndrome>
+            <Throat>
+              <string>Гиперемирован</string>
+            </Throat>
+            <Tonsil>Умеренно увеличены</Tonsil>
+            <IsCoatedWithBloom>false</IsCoatedWithBloom>
+            <Stomach>
+              <string>Мягкий</string>
+              <string>Безболезненный</string>
+            </Stomach>
+            <Symptoms>
+              <string>Головная боль</string>
+              <string>Слабость</string>
+              <string>Лихорадка</string>
+            </Symptoms>
+            <Liver>
+              <string>Не увеличена</string>
+              <string>Безболезненная</string>
+            </Liver>
+            <UrinarySystem>
+              <string>Мочеиспускание свободное</string>
+              <string>Безболезненное</string>
+            </UrinarySystem>
+            <MenstrualCycle>1</MenstrualCycle>
+            <PeripheralEdema>Нет</PeripheralEdema>
+            <BloodSugar>5.2</BloodSugar>
+            <TreatmentResult>Состояние улучшилось, температура снизилась</TreatmentResult>
+            <DiagnosticMethods>Термометрия, пульсоксиметрия, измерение АД</DiagnosticMethods>
+            <Treatment>Парацетамол 500 мг, симптоматическая терапия</Treatment>
+            <Consumption>Парацетамол — 1 таблетка</Consumption>
+            <ReceiveTypeData>Hospitalization</ReceiveTypeData>
+            <ReceiveDate>2026-09-03T10:30:00+05:00</ReceiveDate>
+            <CallType>1</CallType>
+            <DescCallType>Первичный вызов</DescCallType>
+            <IsRepeat>false</IsRepeat>
+            <Triage>2</Triage>
+            <IsReanimation>false</IsReanimation>
+            <ArrivalHospitalPlanTime>2026-09-03T10:30:00+05:00</ArrivalHospitalPlanTime>
+          </AmbulanceCardRequest>
+        </List>
+      </AmbulanceCard_LoadOrUpdateCardsRequest>
+    </data>
+  </request>
+  <!-- responseData/data. StatusCode: 200 — успех; 400 — ошибка запроса; 500 — внутренняя ошибка; 501 — не реализовано / отправитель не сопоставлен с МИС -->
+  <response>
+    <data xmlns:q1="http://integrations.gosreestr.kz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="q1:IntegraResponse">
+      <ResponseInfo>
+        <RequestType>AmbulanceCard_LoadOrUpdateCards</RequestType>
+        <StatusCode>200</StatusCode>
+        <Message>OK</Message>
+      </ResponseInfo>
+      <AmbulanceCard_LoadOrUpdateCardsResponse>
+        <Total>1</Total>
+        <Inserted>0</Inserted>
+        <Updated>1</Updated>
+        <Unchanged>0</Unchanged>
+        <Errors></Errors>
+      </AmbulanceCard_LoadOrUpdateCardsResponse>
+    </data>
+  </response>
+</example>

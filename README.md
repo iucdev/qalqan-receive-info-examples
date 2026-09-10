@@ -50,9 +50,13 @@
 | [References_Operations](QalqanReceiveInfo/References_Operations/) | Справочник операций МКБ-9 |
 | [Screenings_Complete](QalqanReceiveInfo/Screenings_Complete/) | Завершение скрининга (ответ без тела результата) |
 | [Screenings_Status](QalqanReceiveInfo/Screenings_Status/) | Статус скрининга |
+| [AmbulanceCard_LoadCards](QalqanReceiveInfo/AmbulanceCard_LoadCards/) | Карты вызова скорой помощи: актив / госпитализация (только новые) |
+| [AmbulanceCard_LoadOrUpdateCards](QalqanReceiveInfo/AmbulanceCard_LoadOrUpdateCards/) | То же, вставка/обновление по `ExternalId` |
 
 `Load*` — только вставка новых записей, `LoadOrUpdate*` — вставка или обновление по идентификатору записи МИС
-(`CaseId` / `AdmissionId` / `ServiceId`).
+(`CaseId` / `AdmissionId` / `ServiceId` / `ExternalId`). Карта вызова СП передаётся полным снимком: при обновлении
+непереданные поля обнуляются, `MedicalSupplies` заменяются целиком; версия с более старым `ReceiveDate` игнорируется
+(ошибка `StaleVersion`), карта старше срока блокировки по `CallTime` не обновляется (`PeriodClosed`).
 
 Правила формата (совпадают с .NET `XmlSerializer` на стороне сервиса): даты `yyyy-MM-dd`; дата/время ISO 8601 со
 смещением (`2026-04-03T10:30:00+05:00`); перечисления **числовыми кодами** (`<Sex>1</Sex>`, `<BgFinanceSource>1</BgFinanceSource>`);
