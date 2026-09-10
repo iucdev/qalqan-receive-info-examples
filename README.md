@@ -28,8 +28,6 @@
 5. Файл `.xml` в той же папке показывает готовый результат шагов 3–4: что именно должно лежать в `requestData`
    и что придёт в `responseData`. Его можно использовать как эталон при отладке без кода.
 
-Каталог `verify/` нужен только для самопроверки репозитория (CI): он компилирует все примеры и запускает их `Example.Run()` / `main()`.
-
 ## QalqanReceiveInfo
 
 Паспорт сервиса: <https://sb.egov.kz/services/passport/ORGAM-S-1170>.
@@ -78,13 +76,6 @@
 `versionHash` (hex, вычисляет МИС; при несовпадении ответ `Status = InvalidHash`), `moId`, `organizationBin`, `misBin`,
 `data` — JSON тела события в виде строки (`eventId`, `eventType`, `misId`, `organizationId`, `organizationBin`,
 `patientInformation` и поля конкретного типа события). Ответ: `IsSuccess`, `ErrorMessage`, `Status` (`Success` | `InvalidHash` | `Error`).
-
-## Проверка сборки
-
-```bash
-dotnet run --project verify/csharp/Verify.csproj -c Release   # компилирует все .cs и запускает Example.Run()
-bash verify/java/run.sh                                        # компилирует все .java и запускает main()
-```
 
 Все идентификаторы в примерах вымышленные (БИН `990140000001`, `OrgSurId 100001`, ИИН вида `9001013000xx`).
 

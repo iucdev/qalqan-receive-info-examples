@@ -19,6 +19,3 @@ target/
 # OS
 .DS_Store
 Thumbs.db
-
-# verify
-verify/java/out/
