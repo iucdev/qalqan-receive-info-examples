@@ -12,6 +12,24 @@
 Транспорт ШЭП (конверт `SendMessage`, `requestInfo`, транспортная подпись, адрес приёма) в примерах не рассматривается:
 файлы описывают только то, что помещается внутрь `requestData` и приходит внутри `responseData`.
 
+## Как использовать
+
+Это не библиотека и не NuGet/Maven-пакет — каждый файл самодостаточен и копируется в проект как есть.
+
+1. Откройте папку нужного сервиса и эндпоинта, например `QalqanReceiveInfo/Services_LoadOrUpdateServices/`.
+2. Скопируйте в свой проект файл `.cs` или `.java`. Внешних зависимостей нет: Java — только JDK 11+, C# — `System.Xml.Serialization`
+   (для `QalqanReceiveInfoFromMIS` дополнительно `System.Text.Json`, входит в .NET 6+).
+3. Заполните DTO своими данными по образцу `Example.Request()` (`request()` в Java) и вызовите `ToXml()` (`toDataXml()`).
+   Результат — элемент `<data>`; вставьте его целиком в `requestData` вашего ШЭП-конверта `SendMessage`.
+   Конверт, `requestInfo`, транспортную подпись и отправку выполняет ваш ШЭП-клиент.
+4. Из ответа ШЭП возьмите элемент `<data>` внутри `responseData` и передайте в `IntegraResponse.Parse()` (`parse()`):
+   дальше доступны `ResponseInfo.StatusCode`, счётчики `Total` / `Inserted` / `Updated` / `Unchanged` и список `Errors` по записям
+   (для справочников — страница `Items`, для скрининга — статус).
+5. Файл `.xml` в той же папке показывает готовый результат шагов 3–4: что именно должно лежать в `requestData`
+   и что придёт в `responseData`. Его можно использовать как эталон при отладке без кода.
+
+Каталог `verify/` нужен только для самопроверки репозитория (CI): он компилирует все примеры и запускает их `Example.Run()` / `main()`.
+
 ## QalqanReceiveInfo
 
 Паспорт сервиса: <https://sb.egov.kz/services/passport/ORGAM-S-1170>.
